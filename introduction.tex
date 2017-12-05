@@ -1,1 +1,30 @@
-Tecnologia A \cite{go09}.
+O processamento de linguagem natural (NLP), é um dos principais ramos da Inteligência Artificial.
+Um de seus marcos inicias desse área de conhecimento foi o teste de Turing~\cite{turing50} no qual propõe a capacidade de
+comunicação como um critério de inteligência.
+Desde sua criação, no inicio dos anos 50, o NLP se consolidou de maneira a se fazer presente no dia-a-dia das pessoas como
+pode-se observar na utilização de serviços automatizados de atendimento ao clientes, ferramentas de tradução etc.
+
+Por sua vez, desde que Hinton \textit{et al.}~\cite{hinton06} apresentou o treinamento por camadas, \textit{Deep Learning}
+passou a superar o estado da arte em diversas tarefas~\cite{lecun15} como reconhecimento de fala e detecção de objetos.
+CNN~\cite{lecun98} inicialmente foram desenvolvidas para se aplicar em problemas de visão computacional.
+Apesar da expansão do uso de redes \textit{multi-layer perceptron} (MLP) durante os anos 90, a aplicação de MLP em imagens
+é computacionalmente custosa, visto que, normalmente, cada pixel se dispõe como uma dimensão da entrada.
+Redes MLP apresentam outra dificuldade em problemas de visão computacional, por cada pixel ser considerado uma dimensão a
+informação espacial contida na imagem é altamente sensível a deslocamentos, escalamentos e distorções.
+LeCun \textit{et al.}~\cite{lecun98} projetaram as redes convolucionais de maneira a reduzir tais adversidades.
+
+Assim como no processamento de imagens, o tratamento de texto também era dificultado pela dimensionalidade dos dados.
+Isso se dá porque aplicações de NLP costumam trabalhar a nível de palavra, ou seja, um documento ou mensagem é substituído
+por um vetor de palavras que por sua vez compõe a entrada do algoritmo de aprendizado de máquina a ser usado e tendo
+cada palavra representada com codificação \textit{one-hot} de dicionários que são compostos de centenas de milhares de
+palavras.
+A esparsidade desse problema limitava a quantidade de técnicas aplicáveis, apenas com começo dos primeiros \textit{embeddings}
+de palavras~\cite{bengio03}, dentre eles o \textit{Word2Vec}~\cite{mikolov13}, se tornou viável a utilização de técnicas
+computacionalmente mais custosas.
+
+Baseado nos êxitos obtidos tanto pelas redes convolutivas quanto pelos \textit{embeddings} de palavras, Yoon Kim~\cite{kim14}
+apresenta um método de utilização de CNN para classificação de texto, comparando os resultados obtidos com relação as técnicas
+tradicionalmente aplicadas a NLP.
+
+Este artigo trata o trabalho de Kim~\cite{kim14} e aplicará as técnicas por ele apresentada na análise de sentimento de
+microblogs com supervisão distante, como descrito por Go \textit{et at.}~\cite{go09}.
