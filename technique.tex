@@ -1,8 +1,8 @@
 % intro falando de ml em texto
 
-\subsection{Pré-processsamentos}
+\subsection{Pré-processamentos}
 
-A primeira etapa na preparação de um documento e/ou mensangem para utilização em algoritmos de machine learning é a
+A primeira etapa na preparação de um documento e/ou mensagem para utilização em algoritmos de machine learning é a
 separação por palavras.
 Este processo é chamado de \textit{tokenização}, denominando-se cada palavra resultante como token.
 A \textit{tokenização} costuma incluir a separação de contrações como a transformação de \textit{dela} em \textit{de}
@@ -13,7 +13,7 @@ não agregam informação para o texto, chamadas de \textit{stopwords}.
 Como nessa trabalho serão abordadas mensagens de redes sociais, também serão removidos links, \textit{hashtags} e menções
 a usuários.
 
-Outros processamentos presentes na literatura são a correção ortografica das palavras e a lemantização, processo de
+Outros processamentos presentes na literatura são a correção ortográfica das palavras e a lematização, processo de
 extração do radical da palavra.
 Entretanto estas etapas não foram utilizadas neste trabalho.
 
@@ -27,12 +27,12 @@ Dado que o mensagem foi devidamente transformada em um vetor de tokens, agora é
 numérica para os tokens.
 Um dos métodos mais observados na literatura é a codificação \textit{one-hot}, na qual cada token é representado de
 maneira maximamente esparsa.
-Ou seja, é definido um espaço cuja dimensão é dada pelo tamanho do vocabulário utilizado e cada palavra é substituida
-por um vetor unitario na direção que representa sua posição no vocabulário.
-Desta maneira, cada token é representado por um vetor unitário de dimensão igual a do vocabulario.
+Ou seja, é definido um espaço cuja dimensão é dada pelo tamanho do vocabulário utilizado e cada palavra é substituída
+por um vetor unitário na direção que representa sua posição no vocabulário.
+Desta maneira, cada token é representado por um vetor unitário de dimensão igual a do vocabulário.
 
 Outra forma possível de utilização é transformar cada par de palavras em um token.
-A utilização de multiplas palavras por token é chamada de \textit{n-gram}.
+A utilização de múltiplas palavras por token é chamada de \textit{n-gram}.
 Porém, sua utilização aumenta significativamente o tamanho do vocabulário, podendo dificultar o processo de treinamento.
 
 \subsection{Bag-of-Words}
@@ -48,14 +48,14 @@ Nesse caso as palavras são pesadas igualmente.
 Outra abordagem possível é pesar a frequência do termo no documento pelo inverso do número de documentos no qual aquele
 termo aparece, técnica denominada \textit{term frequence-inverse document frequence} (TF-IDF)~\cite{salton88}.
 
-É possivel notar que a utilização de ambas as técnicas ignora a ordem das palavras na frase.
+É possível notar que a utilização de ambas as técnicas ignora a ordem das palavras na frase.
 Técnicas como Word2Vec, apresentadas na seção~\ref{w2v}, permitem a utilização da posição do termo na mensagem por conter
 uma representação densa de cada token, eliminando a alta dimensionalidade.
 
 \subsection{Word2Vec}\label{w2v}
 
-Word2Vec~\cite{mikolov13} é uma técnica que visa representar uma palavra por um vetor de numeros reais, denso e de
-tamanho arbitrario.
+Word2Vec~\cite{mikolov13} é uma técnica que visa representar uma palavra por um vetor de números reais, denso e de
+tamanho arbitrário.
 O resultado obtido por Mikolov \textit{et at.}~\cite{mikolov13} mostra que a representação vetorial é capaz de capturar
 parte de seu sentido semântico.
 Na prática, isso significa que, por exemplo, palavras sinônimas ficam próximas entre si no \textit{embedding} obtido.
@@ -77,30 +77,30 @@ No caso do treinamento por CBOW a entrada é da rede são palavras de contexto, 
 ser treinado, sendo esse termo o objetivo da rede.
 A sua primeira camada possui ativação linear, com coeficiente $\frac{1}{c}$ no qual $c$ representa o tamanho da janela
 utilizada.
-Equanto a segunda camada é composta por ativação \textit{softmax}.
+Enquanto a segunda camada é composta por ativação \textit{softmax}.
 O treinamento do modelo \textit{Skipgram} é análogo, porém com as entradas e saídas invertidas.
 Os pesos do modelo Word2Vec são os obtidos na primeira camada após o treinamento da rede.
 
 Por não necessitar de anotação se faz possível a utilização de conjuntos massivos de textos no treinamento do Word2Vec.
 Entretanto, apesar do uso de grandes volumes de dados permitir um melhor desempenho do modelo esse fator também aumenta
-significamente o tempo de treinamento.
+significativamente o tempo de treinamento.
 Para abordar esse problema, Mikolov \textit{et al.}~\cite{mikolov13b} apresentam uma técnica de treinamento com
 amostragem, acelerando o processo significativamente.
 
-Apesar de ser o \textit{embedding} mais conhecido, outros grupos de pesquisadores desenvolveram tecnicas com a mesma
+Apesar de ser o \textit{embedding} mais conhecido, outros grupos de pesquisadores desenvolveram técnicas com a mesma
 finalidade.
 Dentre elas, podemos destacar GloVe~\cite{pennington14}, algoritmo desenvolvido por um grupo de pesquisadores de Stanford
 e FastText~\cite{bojanowski16}, produzido por uma equipe do Facebook.
 
-\subsection{Naive Bayes}
+\subsection{Naïve Bayes}
 
-Naive Bayes é uma das técnicas mais simples de aprendizado supervisionado.
+Naïve Bayes é uma das técnicas mais simples de aprendizado supervisionado.
 Ela se baseia no teorema de Bayes enquanto assume independência entre as características escolhidas para descrever o dado.
 Schütze~\cite{schutze08} apresenta sua formulação matemática.
 
-Os modelos montados com a utilização de Naive Bayes são computacionalmente baratos pois seus parâmetros são obtidos
+Os modelos montados com a utilização de Naïve Bayes são computacionalmente baratos pois seus parâmetros são obtidos
 através de contagens sobre os dados de treinamento e que sua predição utiliza apenas multiplicações.
-Embora se baseie na independência entre características, seu baixo custo operancional leva esta técnica a ser utilizada
+Embora se baseie na independência entre características, seu baixo custo operacional leva esta técnica a ser utilizada
 mesmo em problemas com notória dependência entre características como a classificação de texto~\cite{mccallum98}.
 
 \subsection{Support Vector Machine}
@@ -135,11 +135,11 @@ treinamento.
 Desta forma, o tamanho do vocabulário não exerce grande influência no processo de treinamento.
 
 Joachims ~\cite{joachims98} afirma que esta propriedade juntamente com a esparsidade da codificação \textit{one-hot}
-e a classificação de texto ser um problema linearmente separavel em grandes partes dos casos.
+e a classificação de texto ser um problema linearmente separável em grandes partes dos casos.
 
 \subsection{Redes Convolucionais aplicadas a NLP}
 
-Redes convolucionais são redes neurais desenvolvidads inspiradas no funcionamento do córtex visual.
+Redes convolucionais são redes neurais desenvolvidas inspiradas no funcionamento do córtex visual.
 Elas são compostas primariamente de dois tipos de camadas: convolucionais e \textit{pooling}.
 Camadas convolucionais são formadas por um conjunto de filtros espaciais compostos das mesmas funções não-lineares
 utilizadas em Redes feedforward~\cite{goodfellow16}.
@@ -156,7 +156,7 @@ Apesar de Redes Convolucionais terem sido desenvolvidas com intuito de soluciona
 elas também obtiveram êxito nas mais diversas áreas, como no reconhecimento de voz e em séries temporais~\cite{lecun95}.
 Tal sucesso pode ser atribuído à insensibilidade da rede a deslocamentos.
 
-Em 2014 Kim~\cite{kim14} propos o uso de redes convolucionais aplicadas a texto.
+Em 2014 Kim~\cite{kim14} propôs o uso de redes convolucionais aplicadas a texto.
 Para tal, os documentos são representados em uma matriz na qual cada coluna é composta pelos pesos do Word2Vec
 correspondente a cada palavra.
 Por cada mensagem ter tamanho variado, foi escolhido um número de tokens $n$, que representam cada mensagem.
@@ -181,10 +181,10 @@ Apesar da crescente produção de dados, para muitos problemas o processo de ano
 custosa e limitando assim o conjunto de dados supervisionados.
 
 Supervisão Distante visa contornar essa dificuldade extraindo anotação de maneira automatizada.
-Essa técnica consiste encontrar uma carácteristica que tenha forte correlação com a saída desejada e considera-la como
+Essa técnica consiste encontrar uma característica que tenha forte correlação com a saída desejada e considerá-la como
 uma anotação ruidosa~\cite{go09}.
 
-Esse procedimento obteve êxito em algumas aplicações de processamento de linguaguem natural~\cite{craven99}\cite{go09}
-pela abundância de informaçoes presentes de forma desestruturada.
+Esse procedimento obteve êxito em algumas aplicações de processamento de linguagem natural~\cite{craven99}\cite{go09}
+pela abundância de informações presentes de forma desestruturada.
 Craven \textit{et al.}~\cite{craven99} apresenta uma das primeiras aplicações da técnica extraindo a partir de registros
-textuais informações sobre proteinas e suas relações.
+textuais informações sobre proteínas e suas relações.
