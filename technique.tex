@@ -15,20 +15,22 @@ a usuários.
 
 Outros processamentos presentes na literatura são a correção ortográfica das palavras e a lematização, processo de
 extração do radical da palavra.
-Entretanto estas etapas não foram utilizadas neste trabalho.
+Entretanto estas etapas não foram utilizadas neste trabalho visto que estas são normalmente empregadas para diminuir a
+complexidade do treinamento por reduzir o vocabulário.
 
+% migrar pra metodologia
 Há diversas implementações dos pré-processamentos aqui citados. Neste projeto foram utilizadas a biblioteca
 NLTK~\cite{nltk}, desenvolvida em \textit{python} para remoção de stopwords e tokenização das mensagens.
 SpaCy~\cite{spacy} é outra biblioteca relevante no tratamento de linguagem natural, também em \textit{python}.
 
 \subsection{Codificação One-Hot}
 
-Dado que o mensagem foi devidamente transformada em um vetor de tokens, agora é necessário obter uma representação
+Dado que o mensagem foi devidamente transformada em uma sequência de tokens, agora é necessário obter uma representação
 numérica para os tokens.
 Um dos métodos mais observados na literatura é a codificação \textit{one-hot}, na qual cada token é representado de
 maneira maximamente esparsa.
-Ou seja, é definido um espaço cuja dimensão é dada pelo tamanho do vocabulário utilizado e cada palavra é substituída
-por um vetor unitário na direção que representa sua posição no vocabulário.
+Ou seja, é definido um espaço cujo número de dimensão é dada pelo tamanho do vocabulário utilizado e cada palavra é
+substituída por um vetor unitário na direção que representa sua posição no vocabulário.
 Desta maneira, cada token é representado por um vetor unitário de dimensão igual a do vocabulário.
 
 Outra forma possível de utilização é transformar cada par de palavras em um token.
@@ -37,41 +39,44 @@ Porém, sua utilização aumenta significativamente o tamanho do vocabulário, p
 
 \subsection{Bag-of-Words}
 
-Com cada palavra sendo caracterizada por sua codificação \textit{one-hot}, a forma natural de simbolizar uma mensagem
-seria por uma matriz na qual cada coluna é composta pelo vetor correspondente a cada palavra da frase.
-Porém, para evitar aumentar ainda mais a dimensionalidade do problema é comum se utilizar da técnica \textit{bag-of-words}
-na qual cada mensagem é representada pela soma dos vetores de seus tokens~\cite{schutze08}.
+Uma vez que cada palavra é caracterizada por sua codificação \textit{one-hot}, a forma natural de simbolizar uma mensagem
+é por uma matriz na qual cada coluna é composta pelo vetor correspondente a cada palavra da frase.
+Porém, para evitar o aumento da dimensionalidade do problema é comum se utilizar da técnica \textit{bag-of-words} na
+qual cada mensagem é representada pela soma dos vetores de seus tokens~\cite{schutze08}.
 
-Encontra-se na literatura o nome \textit{term frequence} (tf), dado que a técnica é dada pela contagem de termos de um
-documento.
-Nesse caso as palavras são pesadas igualmente.
-Outra abordagem possível é pesar a frequência do termo no documento pelo inverso do número de documentos no qual aquele
-termo aparece, técnica denominada \textit{term frequence-inverse document frequence} (TF-IDF)~\cite{salton88}.
+Esta técnica também é chamada na literatura como \textit{term frequence} (tf), dado que a técnica é dada pela contagem
+de termos de um documento.
+Nesse caso as palavras são pesadas igualmente, outra abordagem possível é multiplicar a frequência do termo no documento
+pelo inverso do número de documentos no qual aquele termo aparece, técnica denominada \textit{term frequence-inverse
+document frequence} (TF-IDF)~\cite{salton88}.
+A TF-IDF permite compensar a grande presença de palavras muito frequentes, que limitariam a influência de termos pouco
+usados.
 
 É possível notar que a utilização de ambas as técnicas ignora a ordem das palavras na frase.
-Técnicas como Word2Vec, apresentadas na seção~\ref{w2v}, permitem a utilização da posição do termo na mensagem por conter
-uma representação densa de cada token, eliminando a alta dimensionalidade.
+Técnicas como Word2Vec, apresentada na seção~\ref{w2v}, permitem a utilização da posição do termo na mensagem por conter
+uma representação densa de cada token, reduzindo a dimensionalidade do problema.
 
 \subsection{Word2Vec}\label{w2v}
 
-Word2Vec~\cite{mikolov13} é uma técnica que visa representar uma palavra por um vetor de números reais, denso e de
+Word2Vec~\cite{mikolov13} (W2V) é uma técnica que visa representar uma palavra por um vetor de números reais, denso e de
 tamanho arbitrário.
-O resultado obtido por Mikolov \textit{et at.}~\cite{mikolov13} mostra que a representação vetorial é capaz de capturar
-parte de seu sentido semântico.
+Os resultados obtidos por Mikolov \textit{et at.}~\cite{mikolov13} mostram que a representação vetorial é capaz de
+capturar parte do sentido semântico dos termos.
 Na prática, isso significa que, por exemplo, palavras sinônimas ficam próximas entre si no \textit{embedding} obtido.
 
 Desenvolvida por um grupo de engenheiros do Google, estes vetores são aprendidos a partir de uma janela de contexto
-ao redor do termo desejado.
+ao redor de cada palavra presente nos documentos de treinamento.
 
-Foram desenvolvidas duas modelos de treinamento distintos.
-Sendo eles o \textit{Continuos Bag-of-Words} (CBOW) e o \textit{Skipgram}.
+Foram desenvolvidas duas modelos de treinamento distintos, são eles o \textit{Continuos Bag-of-Words} (CBOW) e o
+\textit{Skipgram}.
 A diferença entre ambos, além da forma de treinamento, se dá principalmente pelo tempo de convergência e pela acurácia.
-No treinamento por CBOW, o treinamento do W2V visa prever o termo central da janela a partir das palavras que a rodeiam.
-No modelo obtido por \textit{Skipgram}, por sua vez, o treinamento é dado de forma a prever as palavras de contexto a
+No treinamento por CBOW, o W2V visa prever o termo central da janela a partir das palavras que a rodeiam.
+No modelo obtido por \textit{Skipgram} o treinamento, por sua vez, é dado de forma a prever as palavras de contexto a
 partir do termo central da janela.
 
-O modelo Word2Vec se constitui de uma rede neural de uma camada escondida em que suas entradas e objetivos são a
+O modelo Word2Vec se constitui de uma rede neural de uma única camada escondida em que suas entradas e objetivos são a
 codificação \textit{one-hot} dos termos.
+
 O número de neurônios presentes na camada escondida equivale a dimensionalidade do \textit{embedding}.
 No caso do treinamento por CBOW a entrada é da rede são palavras de contexto, ou seja, as palavras ao redor do termo a
 ser treinado, sendo esse termo o objetivo da rede.
@@ -87,10 +92,10 @@ significativamente o tempo de treinamento.
 Para abordar esse problema, Mikolov \textit{et al.}~\cite{mikolov13b} apresentam uma técnica de treinamento com
 amostragem, acelerando o processo significativamente.
 
-Apesar de ser o \textit{embedding} mais conhecido, outros grupos de pesquisadores desenvolveram técnicas com a mesma
-finalidade.
-Dentre elas, podemos destacar GloVe~\cite{pennington14}, algoritmo desenvolvido por um grupo de pesquisadores de Stanford
-e FastText~\cite{bojanowski16}, produzido por uma equipe do Facebook.
+Apesar de ser o \textit{embedding} mais conhecido para representação de texto, outros grupos de pesquisadores
+desenvolveram técnicas com a mesma finalidade.
+Dentre elas, destacam-se GloVe~\cite{pennington14}, algoritmo desenvolvido por um grupo de pesquisadores de Stanford e
+FastText~\cite{bojanowski16}, produzido por uma equipe do Facebook.
 
 \subsection{Naïve Bayes}
 
@@ -102,6 +107,8 @@ Os modelos montados com a utilização de Naïve Bayes são computacionalmente b
 através de contagens sobre os dados de treinamento e que sua predição utiliza apenas multiplicações.
 Embora se baseie na independência entre características, seu baixo custo operacional leva esta técnica a ser utilizada
 mesmo em problemas com notória dependência entre características como a classificação de texto~\cite{mccallum98}.
+
+% falar de NB em texto
 
 \subsection{Support Vector Machine}
 
@@ -134,15 +141,16 @@ da dimensionalidade das características escolhidas para representar o problema 
 treinamento.
 Desta forma, o tamanho do vocabulário não exerce grande influência no processo de treinamento.
 
-Joachims ~\cite{joachims98} afirma que esta propriedade juntamente com a esparsidade da codificação \textit{one-hot}
-e a classificação de texto ser um problema linearmente separável em grandes partes dos casos.
+Joachims~\cite{joachims98} afirma que esta propriedade juntamente com a esparsidade da codificação \textit{one-hot}
+e a classificação de texto ser um problema linearmente separável em grandes partes dos casos garantem um bom desempenho
+do algoritmo neste caso.
 
 \subsection{Redes Convolucionais aplicadas a NLP}
 
 Redes convolucionais são redes neurais desenvolvidas inspiradas no funcionamento do córtex visual.
 Elas são compostas primariamente de dois tipos de camadas: convolucionais e \textit{pooling}.
 Camadas convolucionais são formadas por um conjunto de filtros espaciais compostos das mesmas funções não-lineares
-utilizadas em Redes feedforward~\cite{goodfellow16}.
+utilizadas em redes neurais \textit{multi-layer perceptron}~\cite{goodfellow16}.
 Para cada exemplo do conjunto de dados, o filtro, cujo tamanho é menor que a entrada, é aplicado no inicio do dado e
 deslocado até o final.
 Desta forma, os filtros dividem os pesos entre todo espaço do dado, permitindo uma insensibilidade a deslocamentos e
@@ -156,13 +164,13 @@ Apesar de Redes Convolucionais terem sido desenvolvidas com intuito de soluciona
 elas também obtiveram êxito nas mais diversas áreas, como no reconhecimento de voz e em séries temporais~\cite{lecun95}.
 Tal sucesso pode ser atribuído à insensibilidade da rede a deslocamentos.
 
-Em 2014 Kim~\cite{kim14} propôs o uso de redes convolucionais aplicadas a texto.
+Kim~\cite{kim14} propôs o uso de redes convolucionais aplicadas a texto.
 Para tal, os documentos são representados em uma matriz na qual cada coluna é composta pelos pesos do Word2Vec
 correspondente a cada palavra.
 Por cada mensagem ter tamanho variado, foi escolhido um número de tokens $n$, que representam cada mensagem.
 Dos documentos que contém número de palavras maior do que o escolhido selecionam-se os $n$ primeiros tokens.
 Nos casos em que a mensagem é menor, ela é completada com tokens de preenchimento, os quais são alocados na origem do
-espaço de \textit{Embedding}.
+espaço do \textit{embedding}.
 O número $n$ é escolhido com base nos dados disponíveis de treinamento, de maneira a não se desperdiçar grande
 quantidade de informação nem se fazer uso excessivo dos tokens.
 
@@ -172,15 +180,16 @@ Desta maneira, cada filtro se desloca apenas entre as janelas de tokens, engloba
 token.
 
 Kim demostra que esta técnica se sobressaí quando comparadas a técnicas de aprendizado de máquina consolidadas para
-classificação de texto.
+classificação de texto como Naïve Bayes e SVM.
 
 \subsection{Supervisão Distante}\label{distant_supervision}
 
-O sucesso de algoritmos de \textit{Deep Learning} depende da disponibilidade de grandes volumes de dados de treinamento.
+Entretanto, o sucesso da aplicação de algoritmos de \textit{Deep Learning} depende da disponibilidade de grandes volumes
+de dados de treinamento.
 Apesar da crescente produção de dados, para muitos problemas o processo de anotação é uma tarefa manual, tornando-a
 custosa e limitando assim o conjunto de dados supervisionados.
 
-Supervisão Distante visa contornar essa dificuldade extraindo anotação de maneira automatizada.
+A supervisão distante visa contornar essa dificuldade extraindo anotação de maneira automatizada.
 Essa técnica consiste encontrar uma característica que tenha forte correlação com a saída desejada e considerá-la como
 uma anotação ruidosa~\cite{go09}.
 
@@ -188,3 +197,11 @@ Esse procedimento obteve êxito em algumas aplicações de processamento de ling
 pela abundância de informações presentes de forma desestruturada.
 Craven \textit{et al.}~\cite{craven99} apresenta uma das primeiras aplicações da técnica extraindo a partir de registros
 textuais informações sobre proteínas e suas relações.
+
+Read~\cite{read05} aplica a supervisão distante para definir a polaridade de sentimento de uma mensagem.
+Para tal, Read separa um conjunto de \textit{emoticons} entre os grupos de positivos e negativos.
+Em seguida, os documentos são anotados automaticamente a partir da presença dos \textit{emoticons} no corpo da mensagem.
+Para evitar a inserção de tendência no modelo, os \textit{emoticons} utilizados para anotação automática são removidos
+das mensagens antes destes serem utilizados para treinamento.
+Read~\cite{read05} analisa a capacidade de utilização dos \textit{emoticons} como anotação ruidosa, técnica que Go
+\textit{el al.}~\cite{go09} replicam na classificação de \textit{tweets}.
