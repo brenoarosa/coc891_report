@@ -1,0 +1,40 @@
+O trabalho de Go \textit{et at.}~\cite{go09} visa definir um sistema de classificação de sentimento sem a necessidade
+de anotação manual dos dados para treinamento, tal caracteristica se faz possivel usando a técnica de supervisão
+distante, como será explicada na seção \ref{distant_supervision}.
+Apesar do termo \textit{análise de sentimento} ser ambíguo na literatura, nesse contexto estaremos tratando da extração
+de polaridade, negativa ou positiva, de uma mensagem.
+Em especial, as mensagens tratadas nesse trabalho são originárias do Twitter, serviço de microblogs.
+Tais mensagens também são referidas como \textit{tweets}.
+
+Embora já existisse uma ampla gama de estudos em análise se sentimento, Go \textit{et at.} apresentaram o primeiro
+trabalho referente a \textit{tweets}.
+A principal caracteristica das mensagens de microblogs são seu tamanho reduzido, no caso do Twitter limitadas a
+140 caracteres.
+Devido a esse fato e ao meio no qual as mensagens estão inseridas, é observaveis variações do idioma especificas
+deste contexto.
+Outro traço notável é que por ser uma plataforma aberta, o Twitter é composto de mensagens dos mais diversos dominios.
+Esse fator dificulta a tarefa a ser executada quando comparado com trabalhos de um dominio específico, como por exemplo
+a análise de sentimento para avaliação de filmes a partir de comentários; ou na predição de flutuações do mercado
+financeiro considerando artigos jornalisticos.
+Além das caracteristicas textuais, os \textit{tweets} também atributos como: republicação ou citação de mensagens, a
+presença de fotos e video, as conexões entre os usuários, local de envio, horário, número de curtidas etc. Tais variáveis
+podem colaborar na realização de tarefas como a análise de sentimento, porém, este trabalho abordará apenas as
+características textuais.
+
+A não dependência de anotação dos dados e a facilidade de coleta dos \textit{tweets}, por meio de interface programável,
+viabilizam a formação de uma grande base de treinamento.
+Para a realização deste trabalho foram coletados cerca de 50 milhões de mensagens filtradas apenas pelo idiomas inglês,
+estes \textit{tweets} compõe a base de treinamento.
+A base de teste por sua vez é composta de \textit{tweets} anotados manualmente. Essa base é composta da coletanea de dados
+disponibilizados pela conferencia anual \textit{Semantic Evaluation} (SemEval)~\cite{semeval17} entre os anos de 2013 a 2017.
+Esta base é composta de cerca de 70 mil \textit{tweets} e processo de anotação destes dados foi feito atraves da plataforma
+CrowdFlower, mais detalhes sobre a formação da base de dados são apresentados por Rosenthal \textit{et al.}~\cite{rosenthal17},
+organizadores do evento.
+
+Primeiramente foram replicadas as técnicas abordadas por Go \textit{et al.}, \textit{Support Vector Machine} (SVM) e
+\textit{Naive Bayes} (NB), validando os resultados obtidos com o conjunto de dados coletados.
+Em seguida, foi gerado um \textit{embedding}, pelo algoritmo Word2Vec, a partir da base de treinamento. Este treinamento
+foi feito utilizando a biblioteca Gensim~\cite{gensim}.
+Por fim, gerou-se um modelo de redes convolucionais aplicando como entrada a representação obtida pelo Word2Vec, como
+descrito por Kim~\cite{kim14}.
+A seleção do modelo foi determinada de maneira a maximizar a área sobre a curva de operação do receptor (ROC).
