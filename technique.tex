@@ -18,11 +18,6 @@ extração do radical da palavra.
 Entretanto estas etapas não foram utilizadas neste trabalho visto que estas são normalmente empregadas para diminuir a
 complexidade do treinamento por reduzir o vocabulário.
 
-% migrar pra metodologia
-Há diversas implementações dos pré-processamentos aqui citados. Neste projeto foram utilizadas a biblioteca
-NLTK~\cite{nltk}, desenvolvida em \textit{python} para remoção de stopwords e tokenização das mensagens.
-SpaCy~\cite{spacy} é outra biblioteca relevante no tratamento de linguagem natural, também em \textit{python}.
-
 \subsection{Codificação One-Hot}
 
 Dado que o mensagem foi devidamente transformada em uma sequência de tokens, agora é necessário obter uma representação
@@ -133,8 +128,8 @@ Portanto, é possível achar um vetor de suporte que defina um hiperplano de sep
 
 Uma limitação na utilização deste algoritmo é seu tempo de treinamento. Sua complexidade computacional fica entre
 $O(n_{caracteristicas} \times n_{dados}^2)$ e $O(n_{caracteristicas} \times n_{dados}^3)$~\cite{list09}.
-Porém, Suykens e Vandewalle desenvolveram uma função custo através da qual tornou possível realizar o treinamento de SVM
-a partir da otimização pelo método do gradiente~\cite{suykens99}.
+Porém, Suykens e Vandewalle~\cite{suykens99} desenvolveram uma função custo através da qual tornou possível realizar o treinamento de SVM
+a partir da otimização pelo método do gradiente.
 
 Uma diferença importante entre o SVM e outros algoritmos de aprendizado de máquina é que seu aprendizado não depende
 da dimensionalidade das características escolhidas para representar o problema mas da dimensionalidade dos dados de
@@ -145,7 +140,7 @@ Joachims~\cite{joachims98} afirma que esta propriedade juntamente com a esparsid
 e a classificação de texto ser um problema linearmente separável em grandes partes dos casos garantem um bom desempenho
 do algoritmo neste caso.
 
-\subsection{Redes Convolucionais aplicadas a NLP}
+\subsection{Redes Convolucionais}
 
 Redes convolucionais são redes neurais desenvolvidas inspiradas no funcionamento do córtex visual.
 Elas são compostas primariamente de dois tipos de camadas: convolucionais e \textit{pooling}.

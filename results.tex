@@ -1,0 +1,19 @@
+Foi possível replicar os resultados obtidos por Go \textit{et al.} com pequenas variações na acurácia.
+Enquanto Go \textit{et al.} obtiveram acurácia de $81,3\%$ e $82,2\%$ para os modelos de Naive Bayes e SVM
+respectivamente, foram atingidos acurácia de $82,2\%$ e $81,9\%$ utilizando os mesmos dados disponibizados por Go
+\textit{et al.} em seu artigo.
+
+Validada a replicação da metodologia proposta por Go \textit{et al.}, foram retreinados os modelos de Naive Bayes e SVM
+utilizando a base de \textit{tweets} coletada anotada por supervisão distante.
+Os resultados apresentados a seguir foram obtidos pelos resultados atingidos nos dados anotados manualmente provindos do
+SemEval.
+
+O modelo de NB alcançou acurácia de $73,34\%$, enquanto SVM obteve $74,86\%$.
+Na utilização do modelo composto W2V e rede convolucional, limitamos em duas o número máximo de camadas da rede e não
+foi utilizado \textit{fine-tunning}, ambos por sua propensão a \textit{overfit}.
+A CNN obteve acurácia de $78,68\%$ superando substancialmente os modelos anteriores.
+O Word2Vec foi treinado por CBOW, com tamanho 100 de camada escondida.
+A rede convolutiva de melhor resultado foi composta de uma camada de 400 filtros convolucionais de tamanho 5 juntamente
+com \textit{pooling} de tamanho 2, seguida de outra camada de 400 filtros com tamanho 3 e tamanho de \textit{pooling} 2.
+As camadas convolucionais aplicaram \textit{padding} de borda.
+Para regularização, foi utilizado \textit{Dropout} com 0,5 de probabilidade.
